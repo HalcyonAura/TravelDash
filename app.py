@@ -32,7 +32,7 @@ def index():
         #abort(404)
     # make this empty page or sign in?
     print(starred_trips)
-    return render_template('base.html', starred=starred_trips)
+    return render_template('index.html', starred=starred_trips)
 
 @app.route('/trips')
 def trips():
