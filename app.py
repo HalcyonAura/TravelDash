@@ -28,7 +28,7 @@ def index():
     conn = get_db_connection()
     trips = conn.execute('SELECT * FROM trips').fetchall()
     conn.close()
-    return render_template('index.html', trips=trips)
+    return render_template('base.html', trips=trips)
 
 
 @app.route('/<int:trip_id>')
@@ -91,3 +91,7 @@ def delete(id):
     conn.close()
     flash('"{}" was successfully deleted!'.format(trip['record']))
     return redirect(url_for('index'))
+
+
+if __name__ == '__main__':
+    app.run()
