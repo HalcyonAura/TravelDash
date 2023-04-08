@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Welcome to FlaskBlog {% endblock %}</h1>
+    {% for trip in trips %}
+        <a href="{{ url_for('trip', trip_id=trip['id']) }}">
+            <h2>{{ trip['title'] }}</h2>
+        </a>
+        <span class="badge badge-primary">{{ trip['created'] }}</span>
+        <a href="{{ url_for('edit', id=trip['id']) }}">
+            <span class="badge badge-warning">Edit</span>
+        </a>
+        <hr>
+    {% endfor %}
+{% endblock %}
