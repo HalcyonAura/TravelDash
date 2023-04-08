@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Welcome to FlaskBlog {% endblock %}</h1>
+    <h1 class="mt-4">{% block title %} Welcome to TravelDash {% endblock %}</h1>
     {% for trip in trips %}
         <a href="{{ url_for('trip', trip_id=trip['id']) }}">
             <h2>{{ trip['title'] }}</h2>

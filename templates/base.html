@@ -21,31 +21,15 @@
         <div class="bg-light border-right" id="sidebar-wrapper">
             <div class="sidebar-heading">TravelDash</div>
             <div class="list-group list-group-flush">
-                <a href="#" class="list-group-item list-group-item-action bg-light">Create New Trip</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">View All Trips</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Trip</a> <!--to be generated later in order of upcoming trip, scrollable?-->
+                <a class="list-group-item list-group-item-action bg-light nav-link" href="{{url_for('create')}}">New Trip</a>
+                <a href="{{url_for('trips')}}" class="list-group-item list-group-item-action bg-light">View All Trips</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">Starred Trip 1</a> <!--to be generated later in order of upcoming trip, need ID (id will be id?) starred trips? starred trips., scrollable?-->
             </div>
         </div>
     <!-- /#sidebar-wrapper -->
 
       <!-- Page Content -->
     <div id="page-content-wrapper">
-<!--<nav class="navbar navbar-expand-md navbar-light bg-light">
-        <a class="navbar-brand" href="{{ url_for('index')}}">FlaskBlog</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{url_for('create')}}">New Trip</a>
-            </li>
-            </ul>
-        </div>
-      </nav>-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
             <button class="btn btn-primary" id="menu-toggle">Hide</button>
 
@@ -79,19 +63,16 @@
         </nav>
 
         <div class="container-fluid">
-            <h1 class="mt-4">Simple Sidebar</h1>
-            <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on
+            <!--<p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on
                 larger screens. When toggled using the button below, the menu will change.</p>
             <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is
                 optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which
-                will toggle the menu when clicked.</p>
+                will toggle the menu when clicked.</p>-->
 
-            <div class="container">
-                {% for message in get_flashed_messages() %}
-                    <div class="alert alert-danger">{{ message }}</div>
-                {% endfor %}
-                {% block content %} {% endblock %}
-            </div>
+            {% for message in get_flashed_messages() %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endfor %}
+            {% block content %} {% endblock %}
         </div>
     </div>
     <!-- /#page-content-wrapper -->

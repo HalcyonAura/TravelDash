@@ -25,10 +25,15 @@ app.config['SECRET_KEY'] = 'your secret key'
 
 @app.route('/')
 def index():
+    # make this empty page or sign in?
+    return render_template('base.html')
+
+@app.route('/trips')
+def trips():
     conn = get_db_connection()
     trips = conn.execute('SELECT * FROM trips').fetchall()
     conn.close()
-    return render_template('base.html', trips=trips)
+    return render_template('index.html', trips=trips)
 
 
 @app.route('/<int:trip_id>')
