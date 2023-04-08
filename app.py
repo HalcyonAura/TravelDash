@@ -25,8 +25,14 @@ app.config['SECRET_KEY'] = 'your secret key'
 
 @app.route('/')
 def index():
+    conn = get_db_connection()
+    starred_trips = conn.execute('SELECT * FROM trips WHERE starred = 1').fetchall()
+    conn.close()
+    #if starred_trips is None:
+        #abort(404)
     # make this empty page or sign in?
-    return render_template('base.html')
+    print(starred_trips)
+    return render_template('base.html', starred=starred_trips)
 
 @app.route('/trips')
 def trips():

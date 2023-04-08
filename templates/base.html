@@ -24,6 +24,9 @@
                 <a class="list-group-item list-group-item-action bg-light nav-link" href="{{url_for('create')}}">New Trip</a>
                 <a href="{{url_for('trips')}}" class="list-group-item list-group-item-action bg-light">View All Trips</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light">Starred Trip 1</a> <!--to be generated later in order of upcoming trip, need ID (id will be id?) starred trips? starred trips., scrollable?-->
+                {% for star in starred %}
+                <a href="{{url_for('trip', trip_id=star['id'])}}" class="list-group-item list-group-item-action bg-light">{{ star['record'] }}</a>
+                {% endfor %}
             </div>
         </div>
     <!-- /#sidebar-wrapper -->
