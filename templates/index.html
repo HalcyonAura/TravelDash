@@ -2,6 +2,15 @@
 
 {% block content %}
     <h1 class="mt-4">{% block title %} Welcome to TravelDash {% endblock %}</h1>
+    {% for day in forecast %}
+        <div>
+            <h2>{{ day['date'] }}</h2>
+            <p>Temperature range: {{ day['minTemp'] }} - {{ day['maxTemp']] }} </p>
+            <p>General Forecast: Day: {{ day['dayForecast']}} Night: {{ day['nightForecast'] }} </p>
+            <p>Rain Forecast: Day: {{ day['dayRainForecast']}} Night: {{ day['nightRainForecast'] }} </p>
+        </div>
+        <hr>
+    {% endfor %}
     {% for trip in trips %}
         <a href="{{ url_for('trip', trip_id=trip['id']) }}">
             <h2>{{ trip['title'] }}</h2>

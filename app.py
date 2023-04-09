@@ -1,13 +1,24 @@
 import sqlite3
 from flask import Flask, render_template, request, url_for, flash, redirect
 from werkzeug.exceptions import abort
+from os import environ as env
+from dotenv import find_dotenv, load_dotenv
+import requests
+import json
 
+#pending func: when first rendering get starred from db, if db updated with star repop list (sort by departured date)
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
+
+API = env.get("WEATHERKEY")
+countrycode='US'
+city="Sacramento"
 
 def get_db_connection():
     conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
     return conn
-
 
 def get_trip(trip_id):
     conn = get_db_connection()
@@ -18,6 +29,49 @@ def get_trip(trip_id):
         abort(404)
     return trip
 
+
+def getLoc():
+    addr="http://dataservice.accuweather.com/locations/v1/cities/"+countrycode+"/search?apikey="+API+"&q="+city+"&details=true"
+    loc = requests.get(addr).text
+    return json.loads(loc)[0]['Key']
+
+def get5Indices(loc):
+    output = requests.get("http://dataservice.accuweather.com/indices/v1/daily/5day/"+loc+"?apikey="+API).text
+    indices = json.loads(output)
+    return indices
+
+def get1Indices(loc):
+    output = requests.get("http://dataservice.accuweather.com/indices/v1/daily/1day/"+loc+"?apikey="+API).text
+    indices = json.loads(output)
+    return indices
+
+def get5Forecast(loc):
+    loc = getLoc()
+    output = requests.get("http://dataservice.accuweather.com/forecasts/v1/daily/5day/"+loc+"?apikey=" + API).text
+    forecast = json.loads(output)
+    simpleForecast = []
+    for day in forecast['DailyForecasts']:
+        # for now condensed, later pass whole object as is, convert to C based on settings later
+        simpleDay = {}
+        simpleDay['date'] = day['date']
+        simpleDay['minTemp'] = str(day['Temperature']['Minimum']['Value']) + "F"
+        simpleDay['maxTemp'] = str(day['Temperature']['Maximum']['Value']) + "F"
+        simpleDay['dayForecast'] = day['Day']['IconPhrase']
+        simpleDay['dayRainForecast'] = day['Day']['HasPrecipitation']
+        simpleDay['nightForecast'] = day['Night']['IconPhrase']
+        simpleDay['nightRainForecast'] = day['Day']['HasPrecipitation']
+        simpleForecast.append(simpleDay)
+    return simpleForecast
+
+def get1Forecast(loc):
+    output = requests.get("http://dataservice.accuweather.com/forecasts/v1/daily/1day/"+loc+"?apikey=" + API).text
+    forecast = json.loads(output)
+    # reformat
+    for key1 in forecast["DailyForecasts"]:
+        print("Weather Forecast for "+key1['Date']+" is:")
+        print("Temperature in F (minimum) is: "+str(key1['Temperature']['Minimum']['Value']))
+        print("Temperature in F (maximum) is: " + str(key1['Temperature']['Maximum']['Value']))
+        print("Day Forecast "+str(key1['Day']['IconPhrase']))
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
@@ -32,7 +86,9 @@ def index():
         #abort(404)
     # make this empty page or sign in?
     print(starred_trips)
-    return render_template('index.html', starred=starred_trips)
+
+    daysForecast = get5Forecast(getLoc())
+    return render_template('index.html', starred=starred_trips, forecast=daysForecast)
 
 @app.route('/trips')
 def trips():
