@@ -13,6 +13,18 @@ countrycode='US'
 city="Sacramento"
 
 #http://dataservice.accuweather.com/forecasts/v1/daily/10day/{locationKey}
+#https://api.oag.com/flight-instances/[?DepartureDate][&ArrivalDate][&CarrierCode][&FlightNumber][&DepartureAirport][&ArrivalAirport][&AircraftRegistrationNumber][&Content][&FlightType][&CodeType][&ServiceType][&Limit][&After][&IataCarrierCode][&IcaoCarrierCode]&version=1.0
+
+def getFlight():
+    # require: departure date, arrival date, carrier code, flight number, departure airport, arrival airport
+    # html = https://api.oag.com/flight-instances/?DepartureDate=2023-04-25&ArrivalDate=2023-04-25&CarrierCode=DL&FlightNumber=317&DepartureAirport=JFK&ArrivalAirport=SEA&version=1.0
+    with open('flight.json', 'r') as f:
+        data = json.load(f)
+        print(data)
+        condensed = {}
+        condensed['departure'] = { "flight": data['data'][0]['carrierCode']['iata'] + str(data['data'][0]['flightNumber']), "airport": data['data'][0]['departure']['airport']['iata'], "terminal": data['data'][0]['departure']['terminal'], "date": data['data'][0]['departure']['date'], "localTime": data['data'][0]['departure']['passengerLocalTime']}
+        condensed['arrival'] = { "flight": data['data'][0]['carrierCode']['iata'] + str(data['data'][0]['flightNumber']), "airport": data['data'][0]['arrival']['airport']['iata'], "terminal": data['data'][0]['arrival']['terminal'], "date": data['data'][0]['arrival']['date'], "localTime": data['data'][0]['arrival']['passengerLocalTime']}
+        return condensed
 
 def getLocation(API):
     addr="http://dataservice.accuweather.com/locations/v1/cities/"+countrycode+"/search?apikey="+API+"&q="+city+"&details=true"
@@ -40,5 +52,8 @@ def getIndices(loc):
     for obj in dict:
         print(obj['Name'])
         
-getForecast(getLocation(API))
+#getForecast(getLocation(API))
 #getIndices(getLocation(API))
+
+
+print(getFlight())

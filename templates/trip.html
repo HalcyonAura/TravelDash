@@ -3,5 +3,16 @@
 {% block content %}
     <h1 class="mt-4">{% block record %} {{ trip['record'] }} {% endblock %}</h1>
     <span class="badge badge-primary">{{ trip['created'] }}</span>
-    <p>Test</p>
+    <h2>{{ flight_info['departure']['airport'] }}: {{ flight_info['departure']['flight']}}</h2>
+    <p>Date/Time: {{ flight_info['departure']['date'] }}/{{ flight_info['departure']['localTime'] }}</p>
+    <p>Terminal: {{ flight_info['departure']['terminal'] }}</p>
+    <h2>{{ flight_info['arrival']['airport'] }}: {{ flight_info['arrival']['flight']}}</h2>
+    <p>Date/Time: {{ flight_info['arrival']['date'] }}/{{ flight_info['arrival']['localTime'] }}</p>
+    <p>Terminal: {{ flight_info['arrival']['terminal'] }}</p>
+    
+    <div class="sampledata">
+        <h2>{{ trip['deptair'] }} - {{ trip['arrivair']}}</h2>
+    <p>Date:{{ trip['deptdate'] }} - {{ trip['arrivdate']}}</p>
+    <p>Flight: {{ trip['carrier'] }}{{trip['flight']}}</p>
+    </div>
 {% endblock %}

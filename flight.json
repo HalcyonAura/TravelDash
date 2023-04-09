@@ -1,0 +1,69 @@
+{
+    "data": [{
+        "carrierCode": {
+            "iata": "DL",
+            "icao": "DAL"
+        },
+        "serviceSuffix": "",
+        "flightNumber": 317,
+        "sequenceNumber": 1,
+        "flightType": "Scheduled",
+        "departure": {
+            "airport": {
+                "iata": "JFK",
+                "icao": "KJFK"
+            },
+            "terminal": "4",
+            "date": "2023-04-25",
+            "passengerLocalTime": "06:40"
+        },
+        "arrival": {
+            "airport": {
+                "iata": "SEA",
+                "icao": "KSEA"
+            },
+            "terminal": "",
+            "date": "2023-04-25",
+            "passengerLocalTime": "09:49"
+        },
+        "aircraftType": {
+            "iata": "739"
+        },
+        "serviceTypeCode": {
+            "iata": "J"
+        },
+        "segmentInfo": {
+            "numberOfStops": 0,
+            "intermediateAirports": {
+                "iata": []
+            }
+        },
+        "oagFingerprint": "7801b1d248c9413eec8a075158020e0d62f84588ecce73d4af6d27ff0a89b896",
+        "codeshare": {
+            "jointOperationAirlineDesignators": [],
+            "comments010": [{
+                "code": "CZ",
+                "serviceNumber": "1150",
+                "suffix": ""
+            }, {
+                "code": "KE",
+                "serviceNumber": "3030",
+                "suffix": ""
+            }, {
+                "code": "KL",
+                "serviceNumber": "5278",
+                "suffix": ""
+            }, {
+                "code": "VS",
+                "serviceNumber": "3158",
+                "suffix": ""
+            }]
+        }
+    }],
+    "paging": {
+        "limit": 10,
+        "totalCount": 1,
+        "totalPages": 1,
+        "next": ""
+    }
+}

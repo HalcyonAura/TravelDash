@@ -8,12 +8,12 @@ with open('schema.sql') as f:
 
 cur = connection.cursor()
 
-cur.execute("INSERT INTO trips (record, starred) VALUES (?, ?)",
-            ('RecordA',0)
+cur.execute("INSERT INTO trips (record, starred, deptdate, arrivdate, carrier, flight, deptair, arrivair) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            ('RecordA',0, "2022-01-01", "2022-01-01", "DL", "317", "JFK", "SEA")
             )
 
-cur.execute("INSERT INTO trips (record, starred) VALUES (?, ?)",
-            ('RecordB',1)
+cur.execute("INSERT INTO trips (record, starred, deptdate, arrivdate, carrier, flight, deptair, arrivair) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            ('RecordB',1, "2023-04-25", "2023-04-25", "DL", "317", "JFK", "SEA")
             )
 
 connection.commit()

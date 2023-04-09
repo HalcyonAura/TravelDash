@@ -5,12 +5,47 @@
 
 <form method="post">
     <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" name="title"
-               placeholder="Trip title" class="form-control"
-               value="{{ request.form['title'] }}"></input>
+        <label for="record">Record</label>
+        <input type="text" name="record"
+               placeholder="Reservation Code" class="form-control"
+               value="{{ request.form['record'] }}"></input>
     </div>
-
+    <div class="form-group">
+        <label for="deptdate">Departure Date</label>
+        <input type="text" name="deptdate"
+               placeholder="YYYY-MM-DD" class="form-control"
+               value="{{ request.form['deptdate'] }}"></input>
+    </div>
+    <div class="form-group">
+        <label for="arrivdate">Arrival Date</label>
+        <input type="text" name="arrivdate"
+               placeholder="YYYY-MM-DD" class="form-control"
+               value="{{ request.form['arrivdate'] }}"></input>
+    </div>
+    <div class="form-group"> <!-- change to dropdown eventually to control form input -->
+        <label for="carrier">Carrier Name</label>
+        <input type="text" name="carrier"
+               placeholder="ABC" class="form-control"
+               value="{{ request.form['carrier'] }}"></input>
+    </div>
+    <div class="form-group">
+        <label for="flight">Flight Number</label>
+        <input type="text" name="flight"
+               placeholder="123" class="form-control"
+               value="{{ request.form['flight'] }}"></input>
+    </div>
+    <div class="form-group">
+        <label for="deptair">Departure Airport</label>
+        <input type="text" name="deptair"
+               placeholder="ABC" class="form-control"
+               value="{{ request.form['deptair'] }}"></input>
+    </div>
+    <div class="form-group">
+        <label for="arrivair">Arrival Airport</label>
+        <input type="text" name="arrivair"
+               placeholder="ABC" class="form-control"
+               value="{{ request.form['arrivair'] }}"></input>
+    </div>
     <!--<div class="form-group">
         <label for="content">Content</label>
         <textarea name="content" placeholder="Trip content"

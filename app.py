@@ -29,6 +29,17 @@ def get_trip(trip_id):
         abort(404)
     return trip
 
+def getFlight():
+    # require: departure date, arrival date, carrier code, flight number, departure airport, arrival airport
+    # html = https://api.oag.com/flight-instances/?DepartureDate=2023-04-25&ArrivalDate=2023-04-25&CarrierCode=DL&FlightNumber=317&DepartureAirport=JFK&ArrivalAirport=SEA&version=1.0
+    with open('flight.json', 'r') as f:
+        data = json.load(f)
+        print(data)
+        condensed = {}
+        condensed['departure'] = { "flight": data['data'][0]['carrierCode']['iata'] + str(data['data'][0]['flightNumber']), "airport": data['data'][0]['departure']['airport']['iata'], "terminal": data['data'][0]['departure']['terminal'], "date": data['data'][0]['departure']['date'], "localTime": data['data'][0]['departure']['passengerLocalTime']}
+        condensed['arrival'] = { "flight": data['data'][0]['carrierCode']['iata'] + str(data['data'][0]['flightNumber']), "airport": data['data'][0]['arrival']['airport']['iata'], "terminal": data['data'][0]['arrival']['terminal'], "date": data['data'][0]['arrival']['date'], "localTime": data['data'][0]['arrival']['passengerLocalTime']}
+        return condensed
+
 
 def getLoc():
     addr="http://dataservice.accuweather.com/locations/v1/cities/"+countrycode+"/search?apikey="+API+"&q="+city+"&details=true"
@@ -87,8 +98,8 @@ def index():
     # make this empty page or sign in?
     print(starred_trips)
 
-    daysForecast = get5Forecast(getLoc())
-    return render_template('index.html', starred=starred_trips, forecast=daysForecast)
+    #daysForecast = get5Forecast(getLoc())
+    return render_template('index.html', starred=starred_trips)
 
 @app.route('/trips')
 def trips():
@@ -100,14 +111,21 @@ def trips():
 
 @app.route('/<int:trip_id>')
 def trip(trip_id):
+    flight_info = getFlight()
     trip = get_trip(trip_id)
-    return render_template('trip.html', trip=trip)
+    return render_template('trip.html', trip=trip, flight_info=flight_info)
 
 
 @app.route('/create', methods=('GET', 'POST'))
 def create():
     if request.method == 'POST':
         record = request.form['record']
+        deptdate = request.form['deptdate']
+        arrivdate = request.form['arrivdate']
+        carrier = request.form['carrier']
+        flight = request.form['flight']
+        deptair = request.form['deptair']
+        arrivair = request.form['arrivair']
         #content = request.form['content']
 
         if not record:
@@ -116,8 +134,8 @@ def create():
             conn = get_db_connection()
             #conn.execute('INSERT INTO trips (record, content) VALUES (?, ?)',
             #             (record, content))
-            conn.execute('INSERT INTO trips (record) VALUES (?,)',
-                         (record,))
+            conn.execute('INSERT INTO trips (record, deptdate, arrivdate, carrier, flight, deptair, arrivair) VALUES (?,?,?,?,?,?,?,)',
+                         (record, deptdate, arrivdate, carrier, flight, deptair, arrivair))
             conn.commit()
             conn.close()
             return redirect(url_for('index'))
