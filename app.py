@@ -134,7 +134,7 @@ def create():
             conn = get_db_connection()
             #conn.execute('INSERT INTO trips (record, content) VALUES (?, ?)',
             #             (record, content))
-            conn.execute('INSERT INTO trips (record, deptdate, arrivdate, carrier, flight, deptair, arrivair) VALUES (?,?,?,?,?,?,?,)',
+            conn.execute('INSERT INTO trips (record, deptdate, arrivdate, carrier, flight, deptair, arrivair) VALUES (?,?,?,?,?,?,?)',
                          (record, deptdate, arrivdate, carrier, flight, deptair, arrivair))
             conn.commit()
             conn.close()
