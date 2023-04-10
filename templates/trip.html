@@ -15,4 +15,14 @@
     <p>Date:{{ trip['deptdate'] }} - {{ trip['arrivdate']}}</p>
     <p>Flight: {{ trip['carrier'] }}{{trip['flight']}}</p>
     </div>
+
+    <div class="sampledata">
+       <h2>Places to Eat</h2>
+       {% for place in places %}
+        <h3>{{ place['name']}}</h3>
+        <p>{{ place['addr'] }} {{ place['compound_code'] }}</p>
+        <p>{{ place['rating'] }} // {{ place['user_rating'] }}</p>
+        <p>{{ place['price'] }}</p>
+        {% endfor %}
+    </div>
 {% endblock %}

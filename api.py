@@ -52,8 +52,30 @@ def getIndices(loc):
     for obj in dict:
         print(obj['Name'])
         
+
+def getPlacesResults():
+    # eventually dropdown with typical searches e.g. restaurants/food near me, hotels, museums, parks, public transportation (bus, taxi, train)
+
+    #call = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=38.577521252338656%2C-121.49046936693979&radius=5000&type=restaurant&key="+env.get("PLACESKEY")
+    with open('places.json', 'r') as f:
+        data = json.load(f)
+        places = []
+        for loc in data['results']:
+            place = {}
+            place['name'] = loc['name']
+            place['price'] = loc['price_level']
+            place['rating'] = loc['rating']
+            place['user_rating'] = loc['user_ratings_total']
+            place['addr'] = loc['vicinity']
+            place['compound_code'] = loc['plus_code']['compound_code']
+            places.append(place)
+
+    return places
+    #output = requests.get(call).text
+    #dict = json.loads(output)
+    #print(dict)
 #getForecast(getLocation(API))
 #getIndices(getLocation(API))
+#print(getFlight())
 
-
-print(getFlight())
+print(getPlacesResults())
